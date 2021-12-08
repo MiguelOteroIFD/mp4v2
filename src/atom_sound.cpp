@@ -115,10 +115,10 @@ void MP4SoundAtom::Read()
         m_pProperties.Delete(1);
         m_pProperties.Delete(0);
 
-        if (ATOMID(GetType()) == ATOMID("alac")) {
-            AddProperty(new MP4BytesProperty(*this, "decoderConfig", m_size));
-            ReadProperties();
-        }
+        //if (ATOMID(GetType()) == ATOMID("alac")) {
+            //AddProperty(new MP4BytesProperty(*this, "decoderConfig", m_size));
+            //ReadChildAtoms();
+        //}
         if (m_pChildAtomInfos.Size() > 0) {
             ReadChildAtoms();
         }

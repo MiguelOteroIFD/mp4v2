@@ -403,12 +403,6 @@ Log::hexDump( uint8_t           indent,
     ASSERT(pBytes || (numBytes == 0));
     ASSERT(format);
 
-    if (verbosity_ > this->_verbosity)
-    {
-        // We're not set verbose enough to log this
-        return;
-    }
-
     // Build the description by processing format and the
     // remaining args.  Since we don't have asprintf, pick
     // an arbitrary length for the string and use snprintf.
@@ -475,7 +469,8 @@ Log::hexDump( uint8_t           indent,
         // double-check the verbosity and the callback
         // function pointer, but that seems OK (13-feb-09,
         // dbyron)
-        this->printf(verbosity_,"%s",oneLine.str().c_str());
+
+        this->printf(verbosity,"%s",oneLine.str().c_str());
     }
 
     if (desc)

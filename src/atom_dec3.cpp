@@ -28,25 +28,44 @@ namespace impl {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-
-MP4DAc3Atom::MP4DAc3Atom(MP4File &file)
-        : MP4Atom(file, "dac3")
+MP4DEc3Atom::MP4DEc3Atom(MP4File &file)
+        : MP4Atom(file, "dec3")
 {
-    AddProperty( new MP4BitfieldProperty(*this, "fscod", 2)); /* 0 */
-    AddProperty( new MP4BitfieldProperty(*this, "bsid", 5)); /* 1 */
-    AddProperty( new MP4BitfieldProperty(*this, "bsmod", 3)); /* 2 */
-    AddProperty( new MP4BitfieldProperty(*this, "acmod", 3)); /* 3 */
-    AddProperty( new MP4BitfieldProperty(*this, "lfeon", 1)); /* 4 */
-    AddProperty( new MP4BitfieldProperty(*this, "bit_rate_code", 5)); /* 5 */
-    AddProperty( new MP4BitfieldProperty(*this, "reserved", 5)); /* 6 */
-    m_pProperties[6]->SetReadOnly(true);
+	AddProperty( new MP4BytesProperty(*this, "content", 0)); /* 0 */
+    /*AddProperty( new MP4BitfieldProperty(*this, "data_rate", 13)); /* 0 */
+    /*AddProperty( new MP4BitfieldProperty(*this, "num_ind_sub", 3)); /* 1 */
+    /*AddProperty( new MP4BytesProperty(*this, "ind_sub", 0)); /* 2 */
+
+    /*MP4BitfieldProperty *pCount;
+    MP4TableProperty *pTable;
+
+    pCount = new MP4BitfieldProperty(*this, "num_ind_sub", 3);
+    AddProperty(pCount); /* 1 */
+
+    /*pTable = new MP4TableProperty(*this, "ind_sub", pCount);
+    AddProperty(pTable); /* 2 */
+
+    /*pTable->AddProperty(new MP4BitfieldProperty(pTable->GetParentAtom(),"fscod", 2));
+    pTable->AddProperty(new MP4BitfieldProperty(pTable->GetParentAtom(),"bsid", 5));
+    pTable->AddProperty(new MP4BitfieldProperty(pTable->GetParentAtom(),"bsmod", 5));
+    pTable->AddProperty(new MP4BitfieldProperty(pTable->GetParentAtom(),"acmod", 4));
+    pTable->AddProperty(new MP4BitfieldProperty(pTable->GetParentAtom(),"lfeon", 1));
+    pTable->AddProperty(new MP4BitfieldProperty(pTable->GetParentAtom(),"reserved", 3));
+    pTable->AddProperty(new MP4BitfieldProperty(pTable->GetParentAtom(),"num_dep_sub", 4));
+
+    pTable->AddProperty(new MP4BitfieldProperty(pTable->GetParentAtom(),"chan_loc", 1));*/
 }
 
-void MP4DAc3Atom::Generate()
+void MP4DEc3Atom::Generate()
 {
     MP4Atom::Generate();
- 
+}
 
+void MP4DEc3Atom::Read()
+{
+    // calculate size of the metadata from the atom size
+    ((MP4BytesProperty*)m_pProperties[0])->SetValueSize(m_size);
+    MP4Atom::Read();
 }
 
 /*
@@ -73,10 +92,11 @@ void MP4DAc3Atom::Generate()
  *       reserved = 0 (0x00) <5 bits>
  *
  */
-void MP4DAc3Atom::Dump(uint8_t indent, bool dumpImplicits)
+void MP4DEc3Atom::Dump(uint8_t indent, bool dumpImplicits)
 {
   
-    MP4BitfieldProperty* fscodProp = ((MP4BitfieldProperty*)m_pProperties[0]);
+  MP4Atom::Dump(indent, dumpImplicits);
+    /*MP4BitfieldProperty* fscodProp = ((MP4BitfieldProperty*)m_pProperties[0]);
     MP4BitfieldProperty* bsidProp = ((MP4BitfieldProperty*)m_pProperties[1]);
     MP4BitfieldProperty* bsmodProp = ((MP4BitfieldProperty*)m_pProperties[2]);
     MP4BitfieldProperty* acmodProp = ((MP4BitfieldProperty*)m_pProperties[3]);
@@ -185,7 +205,7 @@ void MP4DAc3Atom::Dump(uint8_t indent, bool dumpImplicits)
         
         log.dump(indent, MP4_LOG_VERBOSE2,
                 "lfeon = %" PRIu64 " (0x%0*" PRIx64 ") <%u bits> [%s]",
-                 lfeon, (int)hexWidth, lfeon,
+                 lfeon, (int)hexWidth, lfeon, 
                  lfeonProp->GetNumBits(), lfeon ? "ENABLED" : "DISABLED"); 
     }
     
@@ -230,7 +250,7 @@ void MP4DAc3Atom::Dump(uint8_t indent, bool dumpImplicits)
                  bit_rate_code, (int)hexWidth, bit_rate_code, 
                  brcProp->GetNumBits(), bit_rate); 
     }
-    if (resProp) resProp->Dump(indent, dumpImplicits);
+    if (resProp) resProp->Dump(indent, dumpImplicits);*/
 }
 
 ///////////////////////////////////////////////////////////////////////////////

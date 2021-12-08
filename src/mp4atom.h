@@ -125,6 +125,13 @@ public:
         m_unknownType = unknownType;
     }
 
+    bool IsInvalidSize() {
+        return m_invalidSize;
+    }
+    void SetInvalidSize(bool invalidSize) {
+        m_invalidSize = invalidSize;
+    }
+
     bool IsRootAtom() {
         return m_type[0] == '\0';
     }
@@ -233,6 +240,7 @@ protected:
     uint64_t    m_size;
     char        m_type[5];
     bool        m_unknownType;
+    bool        m_invalidSize;
     uint8_t m_extendedType[16];
 
     MP4Atom*    m_pParentAtom;
