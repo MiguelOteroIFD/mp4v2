@@ -287,9 +287,9 @@ EXTRA_DIST = project/project.m4
 clean-local:
 
 distclean-local:
-    rm -f $(top_builddir)/Makefile
-    rm -f $(top_builddir)/testlog/*.log
-    rm -f $(top_builddir)/testlog/*.sum
+	rm -f $(top_builddir)/Makefile
+	rm -f $(top_builddir)/testlog/*.log
+	rm -f $(top_builddir)/testlog/*.sum
 
 ###############################################################################
 
@@ -330,8 +330,8 @@ endif
 ## and need to create logdir
 ##
 Makefile: ${Makefile}
-    touch $@
-    $(mkdir_p) $(TESTLOGDIR)
+	touch $@
+	$(mkdir_p) $(TESTLOGDIR)
 
 dist-hook:
 

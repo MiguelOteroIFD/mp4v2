@@ -32,7 +32,10 @@ namespace mp4v2 { namespace impl { namespace qtff {
 ///
 /// A colr-box is expected to be contained in a video track which is one of
 /// the following coding types:
+///     @li av01
 ///     @li avc1
+///     @li hvc1
+///     @li hev1
 ///     @li mp4v
 ///
 /// This implementation assumes a maximum count of <b>1</b> for
