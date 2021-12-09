@@ -1,0 +1,9 @@
+GNUmakefile.in
+aclocal.m4
+autoaux/
+autom4te.cache/
+build/
+configure
+configure~
+libplatform/config.h.in~
+
